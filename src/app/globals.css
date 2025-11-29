@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #000;
+  --color-secondary: #fff;
+}
