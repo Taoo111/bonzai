@@ -117,11 +117,41 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Użytkownicy systemu - członkowie, trenerzy i administratorzy
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  /**
+   * Imię członka/trenera
+   */
+  firstName: string;
+  /**
+   * Nazwisko członka/trenera
+   */
+  lastName: string;
+  /**
+   * Numer telefonu
+   */
+  phone: string;
+  /**
+   * Data urodzenia
+   */
+  dateOfBirth?: string | null;
+  /**
+   * Rola użytkownika w systemie
+   */
+  role: 'member' | 'trainer' | 'admin';
+  /**
+   * Status karnetu (aktualizowany automatycznie)
+   */
+  subscriptionStatus?: ('active' | 'inactive') | null;
+  /**
+   * Notatki o członku
+   */
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -238,6 +268,13 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  dateOfBirth?: T;
+  role?: T;
+  subscriptionStatus?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
