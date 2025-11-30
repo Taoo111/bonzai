@@ -9,11 +9,12 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Payments } from './collections/Payments'
+import { Subscriptions } from './collections/Subscriptions'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const COLLECTIONS = [Users, Payments, Media]
+const COLLECTIONS = [Users, Payments, Media, Subscriptions]
 
 export default buildConfig({
   admin: {

@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     payments: Payment;
     media: Media;
+    subscriptions: Subscription;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -231,6 +233,41 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Karnety członkowskie - ważność członkostwa
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  /**
+   * Członek posiadający karnet
+   */
+  member: number | User;
+  /**
+   * Płatność powiązana z tym karnetem
+   */
+  payment: number | Payment;
+  /**
+   * Data rozpoczęcia karnetu
+   */
+  startDate: string;
+  /**
+   * Data zakończenia karnetu (10. dzień kolejnego miesiąca)
+   */
+  endDate: string;
+  /**
+   * Status karnetu
+   */
+  status: 'active' | 'inactive';
+  /**
+   * Automatyczne odnowienie karnetu
+   */
+  autoRenew?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -265,6 +302,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'subscriptions';
+        value: number | Subscription;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -369,6 +410,20 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  member?: T;
+  payment?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  autoRenew?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
