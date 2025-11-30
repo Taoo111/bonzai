@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { UserRole } from '../enums/user-role'
 
 export const Attendance: CollectionConfig = {
   slug: 'attendance',
@@ -8,7 +9,7 @@ export const Attendance: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'id',
-    defaultColumns: ['member', 'trainingDate', 'trainer', 'isPresent'],
+    defaultColumns: ['member', 'trainingDate', 'trainer', 'attendees'],
     description: 'Lista obecności na treningach',
   },
   access: {
@@ -18,19 +19,11 @@ export const Attendance: CollectionConfig = {
   },
   fields: [
     {
-      name: 'member',
+      name: 'trainingClass',
       type: 'relationship',
-      relationTo: 'users',
+      relationTo: 'training-classes',
       required: true,
-      label: 'Członek',
-      filterOptions: {
-        role: {
-          equals: 'member',
-        },
-      },
-      admin: {
-        description: 'Członek obecny na treningu',
-      },
+      label: 'Rodzaj zajęć',
     },
     {
       name: 'trainingDate',
@@ -61,13 +54,19 @@ export const Attendance: CollectionConfig = {
       },
     },
     {
-      name: 'isPresent',
-      type: 'checkbox',
-      required: true,
-      defaultValue: true,
-      label: 'Obecny',
+      name: 'attendees',
+      type: 'relationship',
+      relationTo: 'users',
+      required: false,
+      hasMany: true,
+      label: 'Obecni',
+      filterOptions: {
+        role: {
+          equals: UserRole.Member,
+        },
+      },
       admin: {
-        description: 'Zaznacz, jeśli członek był obecny na treningu',
+        description: 'Lista członków obecnych na treningu',
       },
     },
     {

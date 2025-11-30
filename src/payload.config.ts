@@ -11,11 +11,12 @@ import { Media } from './collections/Media'
 import { Payments } from './collections/Payments'
 import { Subscriptions } from './collections/Subscriptions'
 import { Attendance } from './collections/Attendance'
+import { TrainingClasses } from './collections/TrainingClasses'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const COLLECTIONS = [Users, Payments, Media, Subscriptions, Attendance]
+const COLLECTIONS = [Users, Payments, Media, Subscriptions, Attendance, TrainingClasses]
 
 export default buildConfig({
   admin: {

@@ -37,6 +37,25 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'fullName',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        hidden: false,
+        description: 'Pełne imię i nazwisko (generowane automatycznie)',
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            if (data?.firstName && data?.lastName) {
+              data.fullName = `${data?.firstName} ${data?.lastName}`
+            }
+            return data
+          },
+        ],
+      },
+    },
+    {
       name: 'phone',
       type: 'text',
       required: true,

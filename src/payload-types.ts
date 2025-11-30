@@ -71,6 +71,8 @@ export interface Config {
     payments: Payment;
     media: Media;
     subscriptions: Subscription;
+    attendance: Attendance;
+    'training-classes': TrainingClass;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +84,8 @@ export interface Config {
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
+    attendance: AttendanceSelect<false> | AttendanceSelect<true>;
+    'training-classes': TrainingClassesSelect<false> | TrainingClassesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -136,6 +140,10 @@ export interface User {
    * Nazwisko członka/trenera
    */
   lastName: string;
+  /**
+   * Pełne imię i nazwisko (generowane automatycznie)
+   */
+  fullName?: string | null;
   /**
    * Numer telefonu
    */
@@ -268,6 +276,53 @@ export interface Subscription {
   createdAt: string;
 }
 /**
+ * Lista obecności na treningach
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attendance".
+ */
+export interface Attendance {
+  id: number;
+  trainingClass: number | TrainingClass;
+  /**
+   * Data i godzina treningu
+   */
+  trainingDate: string;
+  /**
+   * Trener prowadzący trening
+   */
+  trainer: number | User;
+  /**
+   * Lista członków obecnych na treningu
+   */
+  attendees?: (number | User)[] | null;
+  /**
+   * Notatki dotyczące treningu
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Rodzaje treningów dostępnych w klubie
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-classes".
+ */
+export interface TrainingClass {
+  id: number;
+  /**
+   * Nazwa rodzaju zajęć (np. MMA, BJJ, Muay Thai)
+   */
+  name: string;
+  /**
+   * Kolor dla kalendarza (np. #FF5733 lub hex code)
+   */
+  color?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -306,6 +361,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subscriptions';
         value: number | Subscription;
+      } | null)
+    | ({
+        relationTo: 'attendance';
+        value: number | Attendance;
+      } | null)
+    | ({
+        relationTo: 'training-classes';
+        value: number | TrainingClass;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -356,6 +419,7 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
+  fullName?: T;
   phone?: T;
   dateOfBirth?: T;
   role?: T;
@@ -422,6 +486,29 @@ export interface SubscriptionsSelect<T extends boolean = true> {
   endDate?: T;
   status?: T;
   autoRenew?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attendance_select".
+ */
+export interface AttendanceSelect<T extends boolean = true> {
+  trainingClass?: T;
+  trainingDate?: T;
+  trainer?: T;
+  attendees?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-classes_select".
+ */
+export interface TrainingClassesSelect<T extends boolean = true> {
+  name?: T;
+  color?: T;
   updatedAt?: T;
   createdAt?: T;
 }
