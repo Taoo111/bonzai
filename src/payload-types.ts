@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    payments: Payment;
     media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -77,6 +78,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    payments: PaymentsSelect<false> | PaymentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -171,6 +173,45 @@ export interface User {
   password?: string | null;
 }
 /**
+ * Płatności za karnety
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payments".
+ */
+export interface Payment {
+  id: number;
+  /**
+   * Członek, który dokonał płatności
+   */
+  member: number | User;
+  /**
+   * Kwota płatności (domyślnie 230 zł)
+   */
+  amount: number;
+  /**
+   * Metoda płatności
+   */
+  paymentMethod: 'cash' | 'transfer';
+  /**
+   * Data płatności
+   */
+  paymentDate: string;
+  /**
+   * Termin płatności (automatycznie ustawiany na 10. dzień miesiąca)
+   */
+  dueDate: string;
+  /**
+   * Status płatności
+   */
+  status: 'completed' | 'pending' | 'cancelled';
+  /**
+   * Notatki dotyczące płatności
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -216,6 +257,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'payments';
+        value: number | Payment;
       } | null)
     | ({
         relationTo: 'media';
@@ -291,6 +336,21 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payments_select".
+ */
+export interface PaymentsSelect<T extends boolean = true> {
+  member?: T;
+  amount?: T;
+  paymentMethod?: T;
+  paymentDate?: T;
+  dueDate?: T;
+  status?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
