@@ -1,62 +1,53 @@
-type BeforeChangeArgs = {
-  data: {
-    paymentDate?: string
-    dueDate?: string
-    [key: string]: any
-  }
-  operation: 'create' | 'update'
-  originalDoc?: {
-    paymentDate?: string
-    [key: string]: any
-  }
-}
-
-/**
- * Sprawdza, czy należy zaktualizować dueDate
- */
-export function shouldUpdateDueDate(
-  operation: 'create' | 'update',
-  paymentDate: string | undefined,
-  originalPaymentDate?: string | undefined,
-): boolean {
-  if (operation === 'create') {
-    return true
-  }
-
-  if (operation === 'update') {
-    return paymentDate !== undefined && paymentDate !== originalPaymentDate
-  }
-
-  return false
-}
+import { Payment } from '@/payload-types'
+import type { CollectionBeforeChangeHook } from 'payload'
 
 /**
  * Oblicza termin płatności (dueDate) na podstawie daty płatności
- * Jeśli płatność jest przed lub w dniu 10. miesiąca, deadline to 10. dzień bieżącego miesiąca
- * Jeśli płatność jest po 10. dniu miesiąca, deadline to 10. dzień następnego miesiąca
+ * Logika:
+ * <= 10 dzień miesiąca -> 10. dzień bieżącego miesiąca
+ * > 10 dzień miesiąca -> 10. dzień następnego miesiąca
  */
-export function calculateDueDate(paymentDate: string): string {
-  const date = new Date(paymentDate)
-  const day = date.getDate()
-  const month = date.getMonth()
-  const year = date.getFullYear()
+export function calculateDueDate(paymentDateStr: string): string {
+  const date = new Date(paymentDateStr)
 
-  let dueDate: Date
+  // Używamy metod UTC, aby uniknąć problemów ze strefami czasowymi serwera
+  const day = date.getUTCDate()
+  const month = date.getUTCMonth()
+  const year = date.getUTCFullYear()
 
-  if (day <= 10) {
-    dueDate = new Date(year, month, 10)
-  } else {
-    dueDate = new Date(year, month + 1, 10)
-  }
+  // Tworzymy nową datę w UTC (rok, miesiąc, dzień, godz, min...)
+  // Jeśli dzień <= 10, to ten miesiąc (month), jeśli nie, to następny (month + 1)
+  // JS sam ogarnie, że month + 1 dla Grudnia to Styczeń kolejnego roku
+  const targetMonth = day <= 10 ? month : month + 1
+
+  const dueDate = new Date(Date.UTC(year, targetMonth, 10))
 
   return dueDate.toISOString().split('T')[0]
 }
 
-export async function beforeChangePaymentHook({ data, operation, originalDoc }: BeforeChangeArgs) {
-  const needsUpdate = shouldUpdateDueDate(operation, data.paymentDate, originalDoc?.paymentDate)
+export const beforeChangePaymentHook: CollectionBeforeChangeHook<Payment> = async ({
+  data,
+  originalDoc,
+  operation,
+}) => {
+  // 1. Pobieramy nową datę płatności (lub starą, jeśli nie jest zmieniana w tym requeście)
+  // To ważne przy metodzie PATCH (update), gdzie data.paymentDate może być undefined
+  const paymentDate = data.paymentDate || originalDoc?.paymentDate
 
-  if (needsUpdate && data.paymentDate) {
-    data.dueDate = calculateDueDate(data.paymentDate)
+  // 2. Jeśli nie ma daty płatności (teoretycznie niemożliwe przy required: true), nic nie rób
+  if (!paymentDate) {
+    return data
+  }
+
+  // 3. Sprawdzamy czy musimy przeliczyć (tylko przy create lub gdy data się zmieniła)
+  const isNew = operation === 'create'
+  const isChanged =
+    operation === 'update' &&
+    data.paymentDate !== undefined &&
+    data.paymentDate !== originalDoc?.paymentDate
+
+  if (isNew || isChanged) {
+    data.dueDate = calculateDueDate(paymentDate)
   }
 
   return data

@@ -1,4 +1,4 @@
-import { PaymentMethod } from '@/enums/payment-method'
+import { PaymentMethodOptions } from '@/enums/payment-method'
 import { PaymentStatus } from '@/enums/payment-status'
 import type { CollectionConfig } from 'payload'
 import { UserRole } from '../enums/user-role'
@@ -52,16 +52,7 @@ export const Payments: CollectionConfig = {
       type: 'select',
       required: true,
       label: 'Metoda płatności',
-      options: [
-        {
-          label: 'Gotówka',
-          value: PaymentMethod.Cash,
-        },
-        {
-          label: 'Przelew',
-          value: PaymentMethod.Transfer,
-        },
-      ],
+      options: PaymentMethodOptions,
       admin: {
         description: 'Metoda płatności',
       },

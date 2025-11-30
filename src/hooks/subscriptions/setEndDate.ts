@@ -1,59 +1,49 @@
-type BeforeChangeArgs = {
-  data: {
-    startDate?: string
-    endDate?: string
-    [key: string]: any
-  }
-  operation: 'create' | 'update'
-  originalDoc?: {
-    startDate?: string
-    [key: string]: any
-  }
-}
+import { Subscription } from '@/payload-types'
+import type { CollectionBeforeChangeHook } from 'payload'
 
 /**
- * Sprawdza, czy należy zaktualizować endDate
+ * Oblicza datę zakończenia (endDate).
+ * Logika: Zawsze 10. dzień następnego miesiąca względem startDate.
+ * Używa metod UTC, aby uniknąć przesunięć stref czasowych.
  */
-export function shouldUpdateEndDate(
-  operation: 'create' | 'update',
-  startDate: string | undefined,
-  originalStartDate?: string | undefined,
-): boolean {
-  if (operation === 'create') {
-    return true
-  }
+export function calculateEndDate(startDateStr: string): string {
+  const date = new Date(startDateStr)
 
-  if (operation === 'update') {
-    return startDate !== undefined && startDate !== originalStartDate
-  }
+  // Pobieramy rok i miesiąc w UTC
+  const year = date.getUTCFullYear()
+  const month = date.getUTCMonth()
 
-  return false
+  // Tworzymy nową datę: ten sam rok, miesiąc + 1, dzień 10
+  // Date.UTC obsłuży zmianę roku (np. miesiąc 11 (grudzień) + 1 -> styczeń kolejnego roku)
+  const endDateTimestamp = Date.UTC(year, month + 1, 10)
+
+  return new Date(endDateTimestamp).toISOString().split('T')[0]
 }
 
-/**
- * Oblicza datę zakończenia karnetu (endDate) na podstawie daty rozpoczęcia
- * EndDate to zawsze 10. dzień kolejnego miesiąca od startDate
- */
-export function calculateEndDate(startDate: string): string {
-  const date = new Date(startDate)
-  const year = date.getFullYear()
-  const month = date.getMonth()
-
-  // 10. dzień kolejnego miesiąca
-  const endDate = new Date(year, month + 1, 10)
-
-  return endDate.toISOString().split('T')[0]
-}
-
-export async function beforeChangeSubscriptionHook({
+export const beforeChangeSubscriptionHook: CollectionBeforeChangeHook<Subscription> = async ({
   data,
   operation,
   originalDoc,
-}: BeforeChangeArgs) {
-  const needsUpdate = shouldUpdateEndDate(operation, data.startDate, originalDoc?.startDate)
+}) => {
+  // 1. Sprawdzamy, jaka jest "nowa" data startu.
+  // Przy create: bierzemy z data.
+  // Przy update: bierzemy z data (jeśli zmieniono) lub null (jeśli nie ruszano pola).
+  const incomingStartDate = data.startDate
 
-  if (needsUpdate && data.startDate) {
-    data.endDate = calculateEndDate(data.startDate)
+  // 2. Jeśli to update i nie zmieniamy daty startu, to nie przeliczamy daty końca.
+  // Pozwala to Trenerowi ręcznie zmienić endDate (np. wydłużyć komuś karnet gratis),
+  // bez automatycznego nadpisywania przez hooka.
+  if (operation === 'update' && !incomingStartDate) {
+    return data
+  }
+
+  // 3. Sprawdzamy czy data się faktycznie zmieniła (lub czy to nowy rekord)
+  const hasChanged = incomingStartDate !== originalDoc?.startDate
+  const isNew = operation === 'create'
+
+  // Wykonujemy obliczenia tylko jeśli trzeba
+  if ((isNew || hasChanged) && incomingStartDate) {
+    data.endDate = calculateEndDate(incomingStartDate)
   }
 
   return data
