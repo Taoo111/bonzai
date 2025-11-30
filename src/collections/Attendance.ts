@@ -9,7 +9,7 @@ export const Attendance: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'id',
-    defaultColumns: ['member', 'trainingDate', 'trainer', 'attendees'],
+    defaultColumns: ['trainingDate', 'trainer', 'trainingClass'],
     description: 'Lista obecności na treningach',
   },
   access: {

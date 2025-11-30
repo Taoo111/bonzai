@@ -1,6 +1,7 @@
+import { populateFullNameHook } from '@/hooks/users/fields/populateFullName'
 import type { CollectionConfig } from 'payload'
-import { UserRole } from '../enums/user-role'
 import { SubscriptionStatus } from '../enums/subscription-status'
+import { UserRole } from '../enums/user-role'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -45,14 +46,7 @@ export const Users: CollectionConfig = {
         description: 'Pełne imię i nazwisko (generowane automatycznie)',
       },
       hooks: {
-        beforeChange: [
-          ({ data }) => {
-            if (data?.firstName && data?.lastName) {
-              data.fullName = `${data?.firstName} ${data?.lastName}`
-            }
-            return data
-          },
-        ],
+        beforeChange: [populateFullNameHook],
       },
     },
     {

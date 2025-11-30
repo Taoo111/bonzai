@@ -3,6 +3,7 @@ import * as migration_20251130_151750_payments_collection from './20251130_15175
 import * as migration_20251130_152123_subscriptions_collection from './20251130_152123_subscriptions_collection';
 import * as migration_20251130_152830_attendance_collection from './20251130_152830_attendance_collection';
 import * as migration_20251130_155358_training_classes_collection from './20251130_155358_training_classes_collection';
+import * as migration_20251130_155924_attendees_column from './20251130_155924_attendees_column';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20251130_155358_training_classes_collection.up,
     down: migration_20251130_155358_training_classes_collection.down,
-    name: '20251130_155358_training_classes_collection'
+    name: '20251130_155358_training_classes_collection',
+  },
+  {
+    up: migration_20251130_155924_attendees_column.up,
+    down: migration_20251130_155924_attendees_column.down,
+    name: '20251130_155924_attendees_column'
   },
 ];
