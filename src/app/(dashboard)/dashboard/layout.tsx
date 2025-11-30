@@ -4,7 +4,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import '../globals.css'
+import '../../globals.css'
 
 export const metadata = {
   title: 'Dashboard - Bonzai MMA Club',
