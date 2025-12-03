@@ -5,12 +5,12 @@ import { Calendar, CreditCard, Upload } from 'lucide-react'
 export function QuickActions() {
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-3 text-zinc-300 dark:text-zinc-300">Quick Actions</h2>
+      <h2 className="text-lg font-semibold mb-3 text-foreground">Quick Actions</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <Button
           asChild
           variant="outline"
-          className="justify-start h-auto py-4 border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-white dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-white"
+          className="justify-start h-auto py-4 bg-card hover:bg-accent"
         >
           <Link href="/dashboard/payment" className="flex items-center gap-3">
             <CreditCard className="h-5 w-5" />
@@ -21,7 +21,7 @@ export function QuickActions() {
         <Button
           asChild
           variant="outline"
-          className="justify-start h-auto py-4 border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-white dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-white"
+          className="justify-start h-auto py-4 bg-card hover:bg-accent"
         >
           <Link href="/dashboard/payment/upload" className="flex items-center gap-3">
             <Upload className="h-5 w-5" />
@@ -32,7 +32,7 @@ export function QuickActions() {
         <Button
           asChild
           variant="outline"
-          className="justify-start h-auto py-4 border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-white dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-white"
+          className="justify-start h-auto py-4 bg-card hover:bg-accent"
         >
           <Link href="/dashboard/schedule" className="flex items-center gap-3">
             <Calendar className="h-5 w-5" />

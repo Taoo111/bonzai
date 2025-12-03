@@ -13,8 +13,8 @@ export function SubscriptionStatusCard({ isActive, endDate }: SubscriptionStatus
     <Card
       className={`border-2 ${
         isActive
-          ? 'border-green-500/50 bg-zinc-900 shadow-lg shadow-green-500/10 dark:border-green-500/50 dark:bg-zinc-900'
-          : 'border-red-500/50 bg-zinc-900 shadow-lg shadow-red-500/10 dark:border-red-500/50 dark:bg-zinc-900'
+          ? 'border-green-500/50 dark:border-green-500/50 bg-card shadow-lg shadow-green-500/10 dark:shadow-green-500/10'
+          : 'border-red-500/50 dark:border-red-500/50 bg-card shadow-lg shadow-red-500/10 dark:shadow-red-500/10'
       }`}
     >
       <CardHeader className="pb-4">
@@ -22,18 +22,18 @@ export function SubscriptionStatusCard({ isActive, endDate }: SubscriptionStatus
           <div>
             <CardTitle className="text-2xl font-bold mb-1">
               Status:{' '}
-              <span className={isActive ? 'text-green-400' : 'text-red-400'}>
+              <span className={isActive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
                 {isActive ? 'ACTIVE' : 'EXPIRED'}
               </span>
             </CardTitle>
             {endDate && (
-              <CardDescription className="text-zinc-400 dark:text-zinc-400 mt-1">
+              <CardDescription className="mt-1">
                 Valid until: {formatDate(endDate)}
               </CardDescription>
             )}
           </div>
           {!isActive && (
-            <Button asChild className="bg-red-600 hover:bg-red-700 text-white">
+            <Button asChild className="bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white">
               <Link href="/dashboard/payment">Renew Now</Link>
             </Button>
           )}

@@ -59,10 +59,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="relative h-10 w-10 rounded-full border border-zinc-700 hover:border-zinc-600"
+                        className="relative h-10 w-10 rounded-full border border-border hover:bg-accent"
                       >
                         <Avatar className="h-10 w-10">
-                          <AvatarFallback className="bg-zinc-800 text-white border border-zinc-700">
+                          <AvatarFallback className="bg-muted text-foreground border border-border">
                             {userInitials || 'U'}
                           </AvatarFallback>
                         </Avatar>
