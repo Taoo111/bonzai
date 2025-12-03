@@ -12,11 +12,13 @@ import { Payments } from './collections/Payments'
 import { Subscriptions } from './collections/Subscriptions'
 import { Attendance } from './collections/Attendance'
 import { TrainingClasses } from './collections/TrainingClasses'
+import { Schedule } from './globals/Schedule'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const COLLECTIONS = [Users, Payments, Media, Subscriptions, Attendance, TrainingClasses]
+const GLOBALS = [Schedule]
 
 export default buildConfig({
   admin: {
@@ -26,6 +28,7 @@ export default buildConfig({
     },
   },
   collections: COLLECTIONS,
+  globals: GLOBALS,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -4,6 +4,8 @@ import * as migration_20251130_152123_subscriptions_collection from './20251130_
 import * as migration_20251130_152830_attendance_collection from './20251130_152830_attendance_collection';
 import * as migration_20251130_155358_training_classes_collection from './20251130_155358_training_classes_collection';
 import * as migration_20251130_155924_attendees_column from './20251130_155924_attendees_column';
+import * as migration_20251203_002558_schedule from './20251203_002558_schedule';
+import * as migration_20251203_003307_schedule_end_time from './20251203_003307_schedule_end_time';
 
 export const migrations = [
   {
@@ -34,6 +36,16 @@ export const migrations = [
   {
     up: migration_20251130_155924_attendees_column.up,
     down: migration_20251130_155924_attendees_column.down,
-    name: '20251130_155924_attendees_column'
+    name: '20251130_155924_attendees_column',
+  },
+  {
+    up: migration_20251203_002558_schedule.up,
+    down: migration_20251203_002558_schedule.down,
+    name: '20251203_002558_schedule',
+  },
+  {
+    up: migration_20251203_003307_schedule_end_time.up,
+    down: migration_20251203_003307_schedule_end_time.down,
+    name: '20251203_003307_schedule_end_time'
   },
 ];

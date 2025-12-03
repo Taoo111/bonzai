@@ -95,8 +95,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    schedule: Schedule;
+  };
+  globalsSelect: {
+    schedule: ScheduleSelect<false> | ScheduleSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -551,6 +555,75 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Tygodniowy harmonogram zajęć w klubie Bonzai MMA
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedule".
+ */
+export interface Schedule {
+  id: number;
+  /**
+   * Harmonogram zajęć dla każdego dnia tygodnia
+   */
+  days: {
+    /**
+     * Wybierz dzień tygodnia
+     */
+    name: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+    /**
+     * Lista zajęć w danym dniu
+     */
+    classes?:
+      | {
+          /**
+           * Godzina rozpoczęcia zajęć (format: HH:MM, np. 18:00)
+           */
+          startTime: string;
+          /**
+           * Godzina zakończenia zajęć (format: HH:MM, np. 19:30)
+           */
+          endTime: string;
+          /**
+           * Wybierz rodzaj zajęć
+           */
+          trainingClass: number | TrainingClass;
+          /**
+           * Trener prowadzący zajęcia
+           */
+          trainer?: (number | null) | User;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedule_select".
+ */
+export interface ScheduleSelect<T extends boolean = true> {
+  days?:
+    | T
+    | {
+        name?: T;
+        classes?:
+          | T
+          | {
+              startTime?: T;
+              endTime?: T;
+              trainingClass?: T;
+              trainer?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
