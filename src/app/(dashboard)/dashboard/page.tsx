@@ -140,7 +140,7 @@ export default async function DashboardPage() {
 
   for (const payment of recentPayments) {
     const statusLabel =
-      payment.status === 'approved'
+      payment.status === 'completed'
         ? 'Zatwierdzona'
         : payment.status === 'pending'
           ? 'Oczekująca'
