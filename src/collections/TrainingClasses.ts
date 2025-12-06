@@ -37,13 +37,5 @@ export const TrainingClasses: CollectionConfig = {
         description: 'Poziom zaawansowania dla tego rodzaju zajęć',
       },
     },
-    {
-      name: 'color',
-      type: 'text',
-      label: 'Kolor',
-      admin: {
-        description: 'Kolor dla kalendarza (np. #FF5733 lub hex code)',
-      },
-    },
   ],
 }
