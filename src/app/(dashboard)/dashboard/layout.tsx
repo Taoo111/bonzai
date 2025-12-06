@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -44,10 +45,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <header className="border-b border-border bg-card">
               <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/dashboard" className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center border-2 border-border">
-                    <span className="text-background font-bold text-sm">B</span>
-                  </div>
+                <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer">
+                  <Image
+                    src="/bonzai_logo.jpg"
+                    alt="Bonzai MMA Logo"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                    priority
+                  />
                   <span className="text-xl font-bold tracking-tight">Bonzai MMA</span>
                 </Link>
 
@@ -76,8 +82,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/dashboard/profile" className="flex items-center">
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/dashboard/profile"
+                          className="flex items-center cursor-pointer"
+                        >
                           <User className="mr-2 h-4 w-4" />
                           <span>Profil</span>
                         </Link>

@@ -23,18 +23,18 @@ export function SubscriptionStatusCard({ isActive, endDate }: SubscriptionStatus
             <CardTitle className="text-2xl font-bold mb-1">
               Status:{' '}
               <span className={isActive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
-                {isActive ? 'ACTIVE' : 'EXPIRED'}
+                {isActive ? 'AKTYWNY' : 'WYGASŁY'}
               </span>
             </CardTitle>
             {endDate && (
               <CardDescription className="mt-1">
-                Valid until: {formatDate(endDate)}
+                Ważny do: {formatDate(endDate)}
               </CardDescription>
             )}
           </div>
           {!isActive && (
             <Button asChild className="bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white">
-              <Link href="/dashboard/payment">Renew Now</Link>
+              <Link href="/dashboard/payment">Odnów teraz</Link>
             </Button>
           )}
         </div>

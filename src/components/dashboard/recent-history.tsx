@@ -24,15 +24,15 @@ export function RecentHistory({ activities }: RecentHistoryProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">Recent History</CardTitle>
+        <CardTitle className="text-lg font-semibold">Ostatnia aktywność</CardTitle>
       </CardHeader>
       <CardContent>
         {activities.length > 0 ? (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-muted-foreground">Activity</TableHead>
-                <TableHead className="text-muted-foreground text-right">Date</TableHead>
+                <TableHead className="text-muted-foreground">Aktywność</TableHead>
+                <TableHead className="text-muted-foreground text-right">Data</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

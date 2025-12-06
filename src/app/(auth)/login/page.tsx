@@ -96,7 +96,7 @@ export default function LoginPage() {
 
         <div className="mt-4 text-center text-sm text-muted-foreground">
           Nie masz konta?{' '}
-          <Link href="/register" className="text-primary hover:underline">
+          <Link href="/register" className="text-primary hover:underline cursor-pointer">
             Zarejestruj się
           </Link>
         </div>

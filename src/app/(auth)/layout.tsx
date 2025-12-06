@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ModeToggle } from '@/components/mode-toggle'
 import '../globals.css'
@@ -27,8 +28,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             
             <div className="w-full max-w-md">
               <div className="mb-8 text-center">
-                <Link href="/" className="text-3xl font-bold">
-                  Bonzai MMA
+                <Link href="/" className="flex flex-col items-center gap-3 cursor-pointer">
+                  <Image
+                    src="/bonzai_logo.jpg"
+                    alt="Bonzai MMA Logo"
+                    width={60}
+                    height={60}
+                    className="rounded-full object-cover"
+                    priority
+                  />
+                  <span className="text-3xl font-bold">Bonzai MMA</span>
                 </Link>
               </div>
               {children}

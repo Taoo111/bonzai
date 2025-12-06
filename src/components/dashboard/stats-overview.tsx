@@ -15,7 +15,7 @@ export function StatsOverview({ attendanceCount, lastPayment }: StatsOverviewPro
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-muted-foreground">
-            Attendance this month
+            Obecność w tym miesiącu
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -26,7 +26,7 @@ export function StatsOverview({ attendanceCount, lastPayment }: StatsOverviewPro
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-muted-foreground">
-            Last Payment
+            Ostatnia płatność
           </CardTitle>
         </CardHeader>
         <CardContent>

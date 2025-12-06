@@ -7,5 +7,5 @@ export async function POST(request: NextRequest) {
   // Usuń cookie z tokenem
   cookieStore.delete('payload-token')
 
-  return NextResponse.redirect(new URL('/login', request.url))
+  return NextResponse.redirect(new URL('/', request.url))
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ModeToggle } from '@/components/mode-toggle'
@@ -22,14 +23,22 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
         >
           <header className="border-b">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-              <Link href="/" className="text-2xl font-bold">
-                Bonzai MMA
+              <Link href="/" className="flex items-center gap-3 cursor-pointer">
+                <Image
+                  src="/bonzai_logo.jpg"
+                  alt="Bonzai MMA Logo"
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover"
+                  priority
+                />
+                <span className="text-2xl font-bold">Bonzai MMA</span>
               </Link>
               <nav className="flex items-center gap-4">
-                <Link href="/#o-nas" className="hover:text-primary transition-colors">
+                <Link href="/#o-nas" className="hover:text-primary transition-colors cursor-pointer">
                   O nas
                 </Link>
-                <Link href="/#zajecia" className="hover:text-primary transition-colors">
+                <Link href="/#zajecia" className="hover:text-primary transition-colors cursor-pointer">
                   Zajęcia
                 </Link>
                 <ModeToggle />

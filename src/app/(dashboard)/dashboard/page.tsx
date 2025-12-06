@@ -6,6 +6,7 @@ import { SubscriptionStatusCard } from '@/components/dashboard/subscription-stat
 import { QuickActions } from '@/components/dashboard/quick-actions'
 import { StatsOverview } from '@/components/dashboard/stats-overview'
 import { RecentHistory } from '@/components/dashboard/recent-history'
+import { DashboardSchedule } from '@/components/dashboard/dashboard-schedule'
 
 export const metadata = {
   title: 'Dashboard - Bonzai MMA Club',
@@ -112,7 +113,7 @@ export default async function DashboardPage() {
 
     recentActivities.push({
       type: 'training',
-      title: `Training: ${trainingClass?.name || 'Trening'}`,
+      title: `Trening: ${trainingClass?.name || 'Trening'}`,
       date: attendance.trainingDate,
       icon: <Calendar className="h-4 w-4" />,
     })
@@ -139,7 +140,7 @@ export default async function DashboardPage() {
           : 'Odrzucona'
     recentActivities.push({
       type: 'payment',
-      title: `Payment: ${statusLabel}`,
+      title: `Płatność: ${statusLabel}`,
       date: payment.paymentDate as string,
       icon: <CreditCard className="h-4 w-4" />,
     })
@@ -148,6 +149,23 @@ export default async function DashboardPage() {
   // Sortuj po dacie i weź 3 najnowsze
   recentActivities.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   const last3Activities = recentActivities.slice(0, 3)
+
+  // Pobierz harmonogram
+  const schedule = await payload.findGlobal({
+    slug: 'schedule',
+    depth: 2, // Pobierz relacje (trainingClass, trainer)
+  })
+
+  // Pobierz wszystkie rodzaje zajęć dla mapy
+  const { docs: trainingClasses } = await payload.find({
+    collection: 'training-classes',
+    limit: 100,
+  })
+
+  // Utwórz mapę training classes dla szybkiego dostępu
+  const trainingClassesMap = new Map(
+    trainingClasses.map((tc) => [tc.id, { name: tc.name, color: tc.color }]),
+  )
 
   return (
     <div className="space-y-6">
@@ -158,16 +176,20 @@ export default async function DashboardPage() {
 
       <QuickActions />
 
-      <StatsOverview
-        attendanceCount={attendanceCount}
-        lastPayment={
-          lastPayment
-            ? { amount: lastPayment.amount, paymentMethod: lastPayment.paymentMethod as string }
-            : null
-        }
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <StatsOverview
+          attendanceCount={attendanceCount}
+          lastPayment={
+            lastPayment
+              ? { amount: lastPayment.amount, paymentMethod: lastPayment.paymentMethod as string }
+              : null
+          }
+        />
 
-      <RecentHistory activities={last3Activities} />
+        <RecentHistory activities={last3Activities} />
+      </div>
+
+      <DashboardSchedule schedule={schedule} trainingClassesMap={trainingClassesMap} />
     </div>
   )
 }
