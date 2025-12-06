@@ -26,14 +26,28 @@ export default async function LandingPage() {
     depth: 2, // Pobierz relacje (trainingClass, trainer)
   })
 
+  // Pobierz wideo tła z Media collection
+  const { docs: backgroundVideos } = await payload.find({
+    collection: 'media',
+    where: {
+      filename: {
+        equals: 'background.mp4',
+      },
+    },
+    limit: 1,
+  })
+
+  const backgroundVideo = backgroundVideos[0] || null
+  const videoUrl = backgroundVideo?.url || null
+
   // Utwórz mapę training classes dla szybkiego dostępu
   const trainingClassesMap = new Map(
-    trainingClasses.map((tc) => [tc.id, { name: tc.name, color: tc.color, level: tc.level }]),
+    trainingClasses.map((tc) => [tc.id, { name: tc.name, level: tc.level }]),
   )
 
   return (
     <div className="min-h-screen">
-      <HeroSection />
+      <HeroSection videoUrl={videoUrl} />
       <AboutSection />
       <ScheduleSection schedule={schedule} trainingClassesMap={trainingClassesMap} />
       <CTASection />

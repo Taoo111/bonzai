@@ -164,7 +164,7 @@ export default async function DashboardPage() {
 
   // Utwórz mapę training classes dla szybkiego dostępu
   const trainingClassesMap = new Map(
-    trainingClasses.map((tc) => [tc.id, { name: tc.name, color: tc.color, level: tc.level }]),
+    trainingClasses.map((tc) => [tc.id, { name: tc.name, level: tc.level }]),
   )
 
   return (

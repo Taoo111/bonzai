@@ -2,17 +2,34 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Camera } from 'lucide-react'
 
-export function HeroSection() {
+interface HeroSectionProps {
+  videoUrl?: string | null
+}
+
+export function HeroSection({ videoUrl }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/mma-fighter-in-dark-gym-dramatic-lighting-black-an.jpg')`,
-        }}
-      />
-      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black" />
+      {/* Background Video or Image */}
+      {videoUrl ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="/mma-fighter-in-dark-gym-dramatic-lighting-black-an.jpg"
+        >
+          <source src={videoUrl} type="video/mp4" />
+        </video>
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/mma-fighter-in-dark-gym-dramatic-lighting-black-an.jpg')`,
+          }}
+        />
+      )}
+      <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/60 to-black" />
       <div className="absolute inset-0 bg-linear-to-r from-black/80 via-transparent to-black/80" />
 
       {/* Content */}

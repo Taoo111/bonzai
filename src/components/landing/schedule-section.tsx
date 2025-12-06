@@ -27,10 +27,7 @@ interface ScheduleSectionProps {
       }> | null
     }> | null
   } | null
-  trainingClassesMap: Map<
-    number,
-    { name: string; color?: string | null; level?: TrainingLevel | string | null }
-  >
+  trainingClassesMap: Map<number, { name: string; level?: TrainingLevel | string | null }>
 }
 
 export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectionProps) {

@@ -26,10 +26,7 @@ interface DashboardScheduleProps {
       }> | null
     }> | null
   } | null
-  trainingClassesMap: Map<
-    number,
-    { name: string; color?: string | null; level?: TrainingLevel | string | null }
-  >
+  trainingClassesMap: Map<number, { name: string; level?: TrainingLevel | string | null }>
 }
 
 export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardScheduleProps) {
@@ -89,12 +86,6 @@ export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardSch
                               <span className="text-xs text-zinc-600">- {classItem.endTime}</span>
                             </div>
                             <div className="flex items-center gap-2 flex-1">
-                              {trainingClass?.color && (
-                                <div
-                                  className="w-2 h-2 rounded-full shrink-0"
-                                  style={{ backgroundColor: trainingClass.color }}
-                                />
-                              )}
                               <span className="text-sm text-white">
                                 {trainingClass?.name || 'Zajęcia'}
                               </span>
