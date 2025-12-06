@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Clock } from 'lucide-react'
+import { TrainingLevel, TRAINING_LEVEL_LABELS, TRAINING_LEVEL_COLORS } from '@/enums/training-level'
 
 const DAY_NAMES: Record<string, string> = {
   monday: 'Poniedziałek',
@@ -26,7 +27,10 @@ interface ScheduleSectionProps {
       }> | null
     }> | null
   } | null
-  trainingClassesMap: Map<number, { name: string; color?: string | null }>
+  trainingClassesMap: Map<
+    number,
+    { name: string; color?: string | null; level?: TrainingLevel | string | null }
+  >
 }
 
 export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectionProps) {
@@ -45,9 +49,22 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-6">
             Harmonogram zajęć
           </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-zinc-400 max-w-2xl mx-auto mb-8">
             Wybierz zajęcia dopasowane do Twojego poziomu i celów treningowych.
           </p>
+        </div>
+
+        {/* Legend */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {Object.values(TrainingLevel).map((level) => (
+            <Badge
+              key={level}
+              variant="outline"
+              className={`${TRAINING_LEVEL_COLORS[level]} text-xs`}
+            >
+              {TRAINING_LEVEL_LABELS[level]}
+            </Badge>
+          ))}
         </div>
 
         {/* Schedule Grid */}
@@ -98,11 +115,13 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
                                 {trainer.firstName} {trainer.lastName}
                               </p>
                             )}
-                            {trainingClass?.color && (
-                              <div
-                                className="w-full h-1 rounded mt-2"
-                                style={{ backgroundColor: trainingClass.color }}
-                              />
+                            {trainingClass?.level && (
+                              <Badge
+                                variant="outline"
+                                className={`${TRAINING_LEVEL_COLORS[trainingClass.level as TrainingLevel]} text-[10px] px-2 py-0`}
+                              >
+                                {TRAINING_LEVEL_LABELS[trainingClass.level as TrainingLevel]}
+                              </Badge>
                             )}
                           </div>
                         )

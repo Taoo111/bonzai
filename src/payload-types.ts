@@ -320,6 +320,10 @@ export interface TrainingClass {
    */
   name: string;
   /**
+   * Poziom zaawansowania dla tego rodzaju zajęć
+   */
+  level: 'beginner' | 'intermediate' | 'advanced' | 'kids';
+  /**
    * Kolor dla kalendarza (np. #FF5733 lub hex code)
    */
   color?: string | null;
@@ -512,6 +516,7 @@ export interface AttendanceSelect<T extends boolean = true> {
  */
 export interface TrainingClassesSelect<T extends boolean = true> {
   name?: T;
+  level?: T;
   color?: T;
   updatedAt?: T;
   createdAt?: T;

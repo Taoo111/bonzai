@@ -1,4 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { TrainingLevel, TRAINING_LEVEL_LABELS, TRAINING_LEVEL_COLORS } from '@/enums/training-level'
 
 const DAY_NAMES: Record<string, string> = {
   monday: 'Poniedziałek',
@@ -24,7 +26,10 @@ interface DashboardScheduleProps {
       }> | null
     }> | null
   } | null
-  trainingClassesMap: Map<number, { name: string; color?: string | null }>
+  trainingClassesMap: Map<
+    number,
+    { name: string; color?: string | null; level?: TrainingLevel | string | null }
+  >
 }
 
 export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardScheduleProps) {
@@ -94,6 +99,14 @@ export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardSch
                                 {trainingClass?.name || 'Zajęcia'}
                               </span>
                             </div>
+                            {trainingClass?.level && (
+                              <Badge
+                                variant="outline"
+                                className={`${TRAINING_LEVEL_COLORS[trainingClass.level as TrainingLevel]} text-[10px] px-2 py-0 shrink-0`}
+                              >
+                                {TRAINING_LEVEL_LABELS[trainingClass.level as TrainingLevel]}
+                              </Badge>
+                            )}
                             {trainer && (
                               <span className="text-xs text-zinc-500 hidden sm:inline">
                                 {trainer.firstName} {trainer.lastName}
