@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight, Camera } from 'lucide-react'
 
 export function HeroSection() {
   return (
@@ -47,14 +47,20 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-zinc-600 text-white hover:bg-zinc-800 hover:border-zinc-500 font-medium text-base px-8 py-6 uppercase tracking-wider bg-transparent"
+            <Link
+              href="https://www.instagram.com/bonzaimma/?hl=pl"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Play className="mr-2 h-5 w-5" />
-              Zobacz wideo
-            </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-zinc-600 text-white hover:bg-zinc-800 hover:border-zinc-500 font-medium text-base px-8 py-6 uppercase tracking-wider bg-transparent"
+              >
+                <Camera className="mr-2 h-5 w-5" />
+                Instagram
+              </Button>
+            </Link>
           </div>
         </div>
 
