@@ -43,10 +43,10 @@ export function AboutSection() {
           {/* Image Side */}
           <div className="relative aspect-4/5 lg:aspect-3/4 rounded-lg overflow-hidden">
             <Image
-              src="/mma-training-gym-fighters-black-and-white.jpg"
+              src="/team-bonzai.png"
               alt="Bonzai MMA Training"
               fill
-              className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
