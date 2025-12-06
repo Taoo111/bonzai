@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
+import { CalendarCheck, Banknote } from 'lucide-react'
 import { formatPaymentMethod } from './utils'
 
 interface StatsOverviewProps {
@@ -11,38 +12,41 @@ interface StatsOverviewProps {
 
 export function StatsOverview({ attendanceCount, lastPayment }: StatsOverviewProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium text-muted-foreground">
-            Obecność w tym miesiącu
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-3xl font-bold text-foreground">{attendanceCount}</div>
-        </CardContent>
-      </Card>
+    <section className="space-y-3">
+      <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Statystyki</h2>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium text-muted-foreground">
-            Ostatnia płatność
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {lastPayment ? (
-            <div>
-              <div className="text-2xl font-bold text-foreground">{lastPayment.amount} PLN</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                {formatPaymentMethod(lastPayment.paymentMethod)}
-              </div>
+      <div className="grid grid-cols-2 gap-3">
+        {/* Attendance Card */}
+        <Card className="bg-zinc-900/50 border-zinc-800">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <CalendarCheck className="h-4 w-4 text-zinc-500" />
+              <span className="text-xs text-zinc-500 font-medium">Obecność w tym miesiącu</span>
             </div>
-          ) : (
-            <div className="text-muted-foreground">Brak danych</div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+            <p className="text-3xl font-bold text-white">{attendanceCount}</p>
+          </CardContent>
+        </Card>
+
+        {/* Last Payment Card */}
+        <Card className="bg-zinc-900/50 border-zinc-800">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Banknote className="h-4 w-4 text-zinc-500" />
+              <span className="text-xs text-zinc-500 font-medium">Ostatnia płatność</span>
+            </div>
+            {lastPayment ? (
+              <>
+                <p className="text-lg font-bold text-white">{lastPayment.amount} PLN</p>
+                <p className="text-xs text-zinc-500">
+                  ({formatPaymentMethod(lastPayment.paymentMethod)})
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-zinc-500">Brak danych</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </section>
   )
 }
-

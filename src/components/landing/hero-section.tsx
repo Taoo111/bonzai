@@ -1,29 +1,69 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ArrowRight, Play } from 'lucide-react'
 
 export function HeroSection() {
   return (
-    <section className="container mx-auto px-4 py-12 sm:py-16 md:py-20 text-center">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-        Witaj w Bonzai MMA Club
-      </h1>
-      <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-        Profesjonalne treningi sztuk walki dla każdego. Dołącz do naszej społeczności i rozwijaj
-        swoje umiejętności.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4">
-        <Link href="/register" className="w-full sm:w-auto">
-          <Button size="lg" className="w-full sm:w-auto">
-            Dołącz teraz
-          </Button>
-        </Link>
-        <Link href="/login" className="w-full sm:w-auto">
-          <Button size="lg" variant="outline" className="w-full sm:w-auto">
-            Zaloguj się
-          </Button>
-        </Link>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('/mma-fighter-in-dark-gym-dramatic-lighting-black-an.jpg')`,
+        }}
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-transparent to-black/80" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Subtitle */}
+          <p className="text-zinc-400 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium">
+            Profesjonalny klub sztuk walki
+          </p>
+
+          {/* Main Heading */}
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-none">
+            <span className="block">Dyscyplina</span>
+            <span className="block text-zinc-500">&</span>
+            <span className="block">Siła</span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            Dołącz do Bonzai MMA i rozwijaj swoje umiejętności pod okiem doświadczonych trenerów.
+            Treningi dla każdego poziomu zaawansowania.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <Link href="/register">
+              <Button
+                size="lg"
+                className="bg-white text-black hover:bg-zinc-200 font-bold text-base px-8 py-6 uppercase tracking-wider group"
+              >
+                Rozpocznij trening
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-zinc-600 text-white hover:bg-zinc-800 hover:border-zinc-500 font-medium text-base px-8 py-6 uppercase tracking-wider bg-transparent"
+            >
+              <Play className="mr-2 h-5 w-5" />
+              Zobacz wideo
+            </Button>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <span className="text-zinc-500 text-xs uppercase tracking-widest">Przewiń</span>
+          <div className="w-px h-8 bg-linear-to-b from-zinc-500 to-transparent" />
+        </div>
       </div>
     </section>
   )
 }
-

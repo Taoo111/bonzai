@@ -1,4 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Clock } from 'lucide-react'
 
 const DAY_NAMES: Record<string, string> = {
   monday: 'Poniedziałek',
@@ -33,22 +35,41 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
   }
 
   return (
-    <section id="harmonogram" className="container mx-auto px-4 py-12 sm:py-16 bg-muted/50">
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
-        Harmonogram zajęć
-      </h2>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <section id="harmonogram" className="py-24 sm:py-32 bg-zinc-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <p className="text-zinc-500 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium mb-4">
+            Harmonogram
+          </p>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-6">
+            Harmonogram zajęć
+          </h2>
+          <p className="text-zinc-400 max-w-2xl mx-auto">
+            Wybierz zajęcia dopasowane do Twojego poziomu i celów treningowych.
+          </p>
+        </div>
+
+        {/* Schedule Grid */}
+        <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
           {schedule.days.map((day) => {
             const dayName = DAY_NAMES[day.name] || day.name
             return (
-              <Card key={day.id || day.name} className="overflow-hidden">
-                <CardHeader className="bg-card border-b">
-                  <CardTitle className="text-xl">{dayName}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
+              <Card
+                key={day.id || day.name}
+                className="bg-zinc-900/50 border-zinc-800 overflow-hidden"
+              >
+                {/* Day Header */}
+                <div className="bg-zinc-800/50 px-4 py-3 border-b border-zinc-700">
+                  <h3 className="font-bold text-white text-sm uppercase tracking-wider">
+                    {dayName}
+                  </h3>
+                </div>
+
+                {/* Classes */}
+                <CardContent className="p-0">
                   {day.classes && day.classes.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="divide-y divide-zinc-800">
                       {day.classes.map((classItem, index) => {
                         const trainingClass =
                           typeof classItem.trainingClass === 'object'
@@ -60,42 +81,35 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
                         return (
                           <div
                             key={classItem.id || index}
-                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                            className="p-4 hover:bg-zinc-800/30 transition-colors cursor-pointer group"
                           >
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1">
-                              <div className="flex flex-col">
-                                <span className="font-semibold text-foreground text-sm sm:text-base">
-                                  {classItem.startTime}
-                                </span>
-                                <span className="text-xs sm:text-sm text-muted-foreground">
-                                  - {classItem.endTime}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2 flex-1">
-                                {trainingClass?.color && (
-                                  <div
-                                    className="w-3 h-3 rounded-full shrink-0"
-                                    style={{ backgroundColor: trainingClass.color }}
-                                  />
-                                )}
-                                <span className="font-medium text-foreground text-sm sm:text-base">
-                                  {trainingClass?.name || 'Zajęcia'}
-                                </span>
-                              </div>
-                              {trainer && (
-                                <span className="text-xs sm:text-sm text-muted-foreground">
-                                  {trainer.firstName} {trainer.lastName}
-                                </span>
-                              )}
+                            <div className="flex items-center gap-2 mb-2">
+                              <Clock className="h-3.5 w-3.5 text-zinc-500" />
+                              <span className="text-sm font-medium text-zinc-300">
+                                {classItem.startTime}
+                              </span>
+                              <span className="text-xs text-zinc-600">- {classItem.endTime}</span>
                             </div>
+                            <p className="font-semibold text-white mb-1 group-hover:text-zinc-200 transition-colors">
+                              {trainingClass?.name || 'Zajęcia'}
+                            </p>
+                            {trainer && (
+                              <p className="text-xs text-zinc-500 mb-2">
+                                {trainer.firstName} {trainer.lastName}
+                              </p>
+                            )}
+                            {trainingClass?.color && (
+                              <div
+                                className="w-full h-1 rounded mt-2"
+                                style={{ backgroundColor: trainingClass.color }}
+                              />
+                            )}
                           </div>
                         )
                       })}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-center py-4">
-                      Brak zajęć w tym dniu
-                    </p>
+                    <p className="text-zinc-500 text-center py-4 text-sm">Brak zajęć w tym dniu</p>
                   )}
                 </CardContent>
               </Card>
@@ -106,4 +120,3 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
     </section>
   )
 }
-

@@ -176,18 +176,16 @@ export default async function DashboardPage() {
 
       <QuickActions />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <StatsOverview
-          attendanceCount={attendanceCount}
-          lastPayment={
-            lastPayment
-              ? { amount: lastPayment.amount, paymentMethod: lastPayment.paymentMethod as string }
-              : null
-          }
-        />
+      <StatsOverview
+        attendanceCount={attendanceCount}
+        lastPayment={
+          lastPayment
+            ? { amount: lastPayment.amount, paymentMethod: lastPayment.paymentMethod as string }
+            : null
+        }
+      />
 
-        <RecentHistory activities={last3Activities} />
-      </div>
+      <RecentHistory activities={last3Activities} />
 
       <DashboardSchedule schedule={schedule} trainingClassesMap={trainingClassesMap} />
     </div>

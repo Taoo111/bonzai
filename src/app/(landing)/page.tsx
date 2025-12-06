@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/landing/hero-section'
 import { AboutSection } from '@/components/landing/about-section'
 import { ScheduleSection } from '@/components/landing/schedule-section'
 import { CTASection } from '@/components/landing/cta-section'
+import { Footer } from '@/components/landing/footer'
 
 export const metadata = {
   title: 'Bonzai MMA Club - Profesjonalne treningi sztuk walki',
@@ -36,6 +37,7 @@ export default async function LandingPage() {
       <AboutSection />
       <ScheduleSection schedule={schedule} trainingClassesMap={trainingClassesMap} />
       <CTASection />
+      <Footer />
     </div>
   )
 }
