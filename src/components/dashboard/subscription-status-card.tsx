@@ -1,6 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Shield } from 'lucide-react'
 import { formatDate } from './utils'
 
 interface SubscriptionStatusCardProps {
@@ -9,37 +10,63 @@ interface SubscriptionStatusCardProps {
 }
 
 export function SubscriptionStatusCard({ isActive, endDate }: SubscriptionStatusCardProps) {
+  const accentColor = isActive ? 'green' : 'red'
+  const statusText = isActive ? 'AKTYWNY' : 'WYGASŁY'
+
   return (
     <Card
-      className={`border-2 ${
+      className={`border-2 rounded-lg overflow-hidden ${
         isActive
-          ? 'border-green-500/50 dark:border-green-500/50 bg-card shadow-lg shadow-green-500/10 dark:shadow-green-500/10'
-          : 'border-red-500/50 dark:border-red-500/50 bg-card shadow-lg shadow-red-500/10 dark:shadow-red-500/10'
+          ? 'border-green-500 bg-linear-to-br from-green-500/10 via-green-500/5 to-transparent dark:from-green-500/20 dark:via-green-500/10 dark:to-transparent'
+          : 'border-red-500 bg-linear-to-br from-red-500/10 via-red-500/5 to-transparent dark:from-red-500/20 dark:via-red-500/10 dark:to-transparent'
       }`}
     >
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-2xl font-bold mb-1">
-              Status:{' '}
-              <span className={isActive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
-                {isActive ? 'AKTYWNY' : 'WYGASŁY'}
+      <CardContent className="p-4 sm:p-6 relative">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div className="flex-1">
+            {/* Label z ikoną */}
+            <div className="flex items-center gap-2 mb-3">
+              <Shield
+                className={`h-5 w-5 ${isActive ? 'text-green-500' : 'text-red-500'}`}
+                strokeWidth={2}
+              />
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                Status członkostwa
               </span>
-            </CardTitle>
+            </div>
+
+            {/* Badge ze statusem */}
+            <div
+              className={`inline-flex items-center justify-center px-3 sm:px-4 py-2 rounded-lg mb-3 ${
+                isActive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+              }`}
+            >
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wide">
+                {statusText}
+              </span>
+            </div>
+
+            {/* Data ważności */}
             {endDate && (
-              <CardDescription className="mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Ważny do: {formatDate(endDate)}
-              </CardDescription>
+              </p>
             )}
           </div>
+
+          {/* Przycisk "Odnów teraz" dla nieaktywnego */}
           {!isActive && (
-            <Button asChild className="bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white">
-              <Link href="/dashboard/payment">Odnów teraz</Link>
-            </Button>
+            <div className="sm:ml-4 w-full sm:w-auto">
+              <Button
+                asChild
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white"
+              >
+                <Link href="/dashboard/payment">Odnów teraz</Link>
+              </Button>
+            </div>
           )}
         </div>
-      </CardHeader>
+      </CardContent>
     </Card>
   )
 }
-

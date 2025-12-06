@@ -23,7 +23,7 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
         >
           <header className="border-b">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-              <Link href="/" className="flex items-center gap-3 cursor-pointer">
+              <Link href="/" className="flex items-center gap-2 sm:gap-3 cursor-pointer">
                 <Image
                   src="/bonzai_logo.jpg"
                   alt="Bonzai MMA Logo"
@@ -32,18 +32,26 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
                   className="rounded-full object-cover"
                   priority
                 />
-                <span className="text-2xl font-bold">Bonzai MMA</span>
+                <span className="text-xl sm:text-2xl font-bold">Bonzai MMA</span>
               </Link>
-              <nav className="flex items-center gap-4">
-                <Link href="/#o-nas" className="hover:text-primary transition-colors cursor-pointer">
+              <nav className="flex items-center gap-2 sm:gap-4">
+                <Link
+                  href="/#o-nas"
+                  className="hidden sm:inline-block hover:text-primary transition-colors cursor-pointer"
+                >
                   O nas
                 </Link>
-                <Link href="/#zajecia" className="hover:text-primary transition-colors cursor-pointer">
+                <Link
+                  href="/#zajecia"
+                  className="hidden md:inline-block hover:text-primary transition-colors cursor-pointer"
+                >
                   Zajęcia
                 </Link>
                 <ModeToggle />
                 <Link href="/login">
-                  <Button variant="outline">Zaloguj się</Button>
+                  <Button variant="outline" size="sm" className="text-sm">
+                    Zaloguj się
+                  </Button>
                 </Link>
               </nav>
             </div>

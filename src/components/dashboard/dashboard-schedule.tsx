@@ -66,9 +66,9 @@ export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardSch
                       return (
                         <div
                           key={classItem.id || index}
-                          className="flex items-center gap-3 p-2 rounded-md bg-muted/50 hover:bg-muted transition-colors"
+                          className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-2 rounded-md bg-muted/50 hover:bg-muted transition-colors"
                         >
-                          <div className="flex items-center gap-2 min-w-[100px]">
+                          <div className="flex items-center gap-2">
                             <span className="text-sm font-medium text-foreground">
                               {classItem.startTime}
                             </span>
@@ -88,7 +88,7 @@ export function DashboardSchedule({ schedule, trainingClassesMap }: DashboardSch
                             </span>
                           </div>
                           {trainer && (
-                            <span className="text-xs text-muted-foreground hidden sm:inline">
+                            <span className="text-xs text-muted-foreground">
                               {trainer.firstName} {trainer.lastName}
                             </span>
                           )}

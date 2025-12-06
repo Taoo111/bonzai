@@ -33,8 +33,10 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
   }
 
   return (
-    <section id="harmonogram" className="container mx-auto px-4 py-16 bg-muted/50">
-      <h2 className="text-3xl font-bold text-center mb-12">Harmonogram zajęć</h2>
+    <section id="harmonogram" className="container mx-auto px-4 py-12 sm:py-16 bg-muted/50">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
+        Harmonogram zajęć
+      </h2>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {schedule.days.map((day) => {
@@ -58,30 +60,30 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
                         return (
                           <div
                             key={classItem.id || index}
-                            className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
                           >
-                            <div className="flex items-center gap-4 flex-1 flex-wrap">
-                              <div className="flex flex-col min-w-[120px]">
-                                <span className="font-semibold text-foreground">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1">
+                              <div className="flex flex-col">
+                                <span className="font-semibold text-foreground text-sm sm:text-base">
                                   {classItem.startTime}
                                 </span>
-                                <span className="text-sm text-muted-foreground">
+                                <span className="text-xs sm:text-sm text-muted-foreground">
                                   - {classItem.endTime}
                                 </span>
                               </div>
-                              <div className="flex items-center gap-2 flex-1 min-w-[150px]">
+                              <div className="flex items-center gap-2 flex-1">
                                 {trainingClass?.color && (
                                   <div
                                     className="w-3 h-3 rounded-full shrink-0"
                                     style={{ backgroundColor: trainingClass.color }}
                                   />
                                 )}
-                                <span className="font-medium text-foreground">
+                                <span className="font-medium text-foreground text-sm sm:text-base">
                                   {trainingClass?.name || 'Zajęcia'}
                                 </span>
                               </div>
                               {trainer && (
-                                <span className="text-sm text-muted-foreground">
+                                <span className="text-xs sm:text-sm text-muted-foreground">
                                   {trainer.firstName} {trainer.lastName}
                                 </span>
                               )}

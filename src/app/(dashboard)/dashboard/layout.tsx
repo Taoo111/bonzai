@@ -45,16 +45,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <header className="border-b border-border bg-card">
               <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer">
+                <Link href="/dashboard" className="flex items-center gap-2 sm:gap-3 cursor-pointer">
                   <Image
                     src="/bonzai_logo.jpg"
                     alt="Bonzai MMA Logo"
                     width={40}
                     height={40}
-                    className="rounded-full object-cover"
+                    className="rounded-full object-cover shrink-0"
                     priority
                   />
-                  <span className="text-xl font-bold tracking-tight">Bonzai MMA</span>
+                  <span className="text-lg sm:text-xl font-bold tracking-tight hidden sm:inline">
+                    Bonzai MMA
+                  </span>
                 </Link>
 
                 {/* Right side: Theme Toggle + User Avatar */}

@@ -13,8 +13,30 @@ export function QuickActions() {
           className="justify-start h-auto py-4 bg-card hover:bg-accent"
         >
           <Link href="/dashboard/payment" className="flex items-center gap-3">
-            <CreditCard className="h-5 w-5" />
-            <span>Zapłać za karnet</span>
+            <CreditCard className="h-5 w-5 shrink-0" />
+            <span className="text-sm sm:text-base">Zapłać za karnet</span>
+          </Link>
+        </Button>
+
+        <Button
+          asChild
+          variant="outline"
+          className="justify-start h-auto py-4 bg-card hover:bg-accent"
+        >
+          <Link href="/dashboard/payment/upload" className="flex items-center gap-3">
+            <Upload className="h-5 w-5 shrink-0" />
+            <span className="text-sm sm:text-base">Prześlij potwierdzenie płatności</span>
+          </Link>
+        </Button>
+
+        <Button
+          asChild
+          variant="outline"
+          className="justify-start h-auto py-4 bg-card hover:bg-accent"
+        >
+          <Link href="/dashboard/schedule" className="flex items-center gap-3">
+            <Calendar className="h-5 w-5 shrink-0" />
+            <span className="text-sm sm:text-base">Harmonogram zajęć</span>
           </Link>
         </Button>
       </div>

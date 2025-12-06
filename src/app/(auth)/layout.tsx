@@ -26,18 +26,18 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <ModeToggle />
             </div>
             
-            <div className="w-full max-w-md">
-              <div className="mb-8 text-center">
-                <Link href="/" className="flex flex-col items-center gap-3 cursor-pointer">
+            <div className="w-full max-w-md px-4">
+              <div className="mb-6 sm:mb-8 text-center">
+                <Link href="/" className="flex flex-col items-center gap-2 sm:gap-3 cursor-pointer">
                   <Image
                     src="/bonzai_logo.jpg"
                     alt="Bonzai MMA Logo"
                     width={60}
                     height={60}
-                    className="rounded-full object-cover"
+                    className="rounded-full object-cover shrink-0"
                     priority
                   />
-                  <span className="text-3xl font-bold">Bonzai MMA</span>
+                  <span className="text-2xl sm:text-3xl font-bold">Bonzai MMA</span>
                 </Link>
               </div>
               {children}
