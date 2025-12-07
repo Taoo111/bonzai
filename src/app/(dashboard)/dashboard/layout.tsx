@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { LogOut, User } from 'lucide-react'
-import '../../globals.css'
 
 export const metadata = {
   title: 'Dashboard - Bonzai MMA Club',
@@ -35,11 +34,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const userName = user.fullName || `${user.firstName} ${user.lastName}`
 
   return (
-    <html lang="pl" className="dark">
-      <body className="bg-black text-white min-h-screen">
-        <div className="min-h-screen flex flex-col">
-          {/* Header */}
-          <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800">
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800">
             <div className="flex items-center justify-between px-4 py-3 max-w-2xl mx-auto">
               {/* Logo */}
               <Link href="/dashboard" className="flex items-center gap-2 sm:gap-3 cursor-pointer">
@@ -104,12 +101,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
                 </DropdownMenu>
               </div>
             </div>
-          </header>
+      </header>
 
-          {/* Main Content */}
-          <div className="flex-1 px-4 pb-8 pt-4 space-y-6 max-w-2xl mx-auto">{children}</div>
-        </div>
-      </body>
-    </html>
+      {/* Main Content */}
+      <div className="flex-1 px-4 pb-8 pt-4 space-y-6 max-w-2xl mx-auto">{children}</div>
+    </div>
   )
 }

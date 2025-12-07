@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
-import '../globals.css'
 
 const navLinks = [
   { label: 'O nas', href: '#o-nas' },
@@ -17,9 +16,8 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <html lang="pl" className="dark">
-      <body className="bg-black text-white">
-        <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-zinc-800/50">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-zinc-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-16 sm:h-20">
               {/* Logo */}
@@ -116,7 +114,6 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
           </div>
         </header>
         <main className="pt-16 sm:pt-20">{children}</main>
-      </body>
-    </html>
+    </>
   )
 }
