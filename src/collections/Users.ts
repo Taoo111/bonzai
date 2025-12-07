@@ -84,6 +84,14 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Opis',
+      admin: {
+        description: 'Opis trenera (opcjonalne, wyświetlane na stronie)',
+      },
+    },
+    {
       name: 'role',
       type: 'select',
       required: true,

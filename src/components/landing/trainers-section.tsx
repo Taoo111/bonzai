@@ -6,6 +6,7 @@ interface Trainer {
   firstName: string
   lastName: string
   nickname?: string | null
+  description?: string | null
   profileImage?:
     | {
         url?: string | null
@@ -86,6 +87,11 @@ export function TrainersSection({ trainers }: TrainersSectionProps) {
                     {trainer.nickname && (
                       <p className="text-zinc-400 text-sm font-medium mb-2">
                         &quot;{trainer.nickname}&quot;
+                      </p>
+                    )}
+                    {trainer.description && (
+                      <p className="text-zinc-500 text-sm leading-relaxed line-clamp-3">
+                        {trainer.description}
                       </p>
                     )}
                   </div>

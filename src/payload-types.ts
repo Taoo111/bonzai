@@ -165,6 +165,10 @@ export interface User {
    */
   nickname?: string | null;
   /**
+   * Opis trenera (opcjonalne, wyświetlane na stronie)
+   */
+  description?: string | null;
+  /**
    * Rola użytkownika w systemie
    */
   role: 'member' | 'trainer' | 'admin';
@@ -436,6 +440,7 @@ export interface UsersSelect<T extends boolean = true> {
   dateOfBirth?: T;
   profileImage?: T;
   nickname?: T;
+  description?: T;
   role?: T;
   subscriptionStatus?: T;
   notes?: T;
