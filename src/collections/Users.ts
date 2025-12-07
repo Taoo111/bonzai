@@ -67,6 +67,23 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'profileImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Zdjęcie profilowe',
+      admin: {
+        description: 'Zdjęcie profilowe (opcjonalne, głównie dla trenerów)',
+      },
+    },
+    {
+      name: 'nickname',
+      type: 'text',
+      label: 'Pseudonim',
+      admin: {
+        description: 'Pseudonim (opcjonalne, głównie dla trenerów)',
+      },
+    },
+    {
       name: 'role',
       type: 'select',
       required: true,

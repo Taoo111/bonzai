@@ -8,7 +8,7 @@ import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { label: 'O nas', href: '#o-nas' },
-  { label: 'Zajęcia', href: '#zajecia' },
+  { label: 'Trenerzy', href: '#trenerzy' },
   { label: 'Harmonogram', href: '#harmonogram' },
 ]
 
@@ -16,7 +16,7 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <>
+    <div className="dark bg-black text-white">
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-zinc-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-16 sm:h-20">
@@ -114,6 +114,6 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
           </div>
         </header>
         <main className="pt-16 sm:pt-20">{children}</main>
-    </>
+    </div>
   )
 }

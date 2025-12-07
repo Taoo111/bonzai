@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { HeroSection } from '@/components/landing/hero-section'
 import { AboutSection } from '@/components/landing/about-section'
+import { TrainersSection } from '@/components/landing/trainers-section'
 import { ScheduleSection } from '@/components/landing/schedule-section'
 import { CTASection } from '@/components/landing/cta-section'
 import { Footer } from '@/components/landing/footer'
@@ -40,6 +41,18 @@ export default async function LandingPage() {
   const backgroundVideo = backgroundVideos[0] || null
   const videoUrl = backgroundVideo?.url || null
 
+  // Pobierz trenerów (użytkowników z rolą trainer)
+  const { docs: trainers } = await payload.find({
+    collection: 'users',
+    where: {
+      role: {
+        equals: 'trainer',
+      },
+    },
+    limit: 100,
+    depth: 1, // Pobierz relację profileImage
+  })
+
   // Utwórz mapę training classes dla szybkiego dostępu
   const trainingClassesMap = new Map(
     trainingClasses.map((tc) => [tc.id, { name: tc.name, level: tc.level }]),
@@ -49,6 +62,7 @@ export default async function LandingPage() {
     <div className="min-h-screen">
       <HeroSection videoUrl={videoUrl} />
       <AboutSection />
+      <TrainersSection trainers={trainers} />
       <ScheduleSection schedule={schedule} trainingClassesMap={trainingClassesMap} />
       <CTASection />
       <Footer />

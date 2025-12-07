@@ -46,13 +46,17 @@ export function Footer() {
               Nawigacja
             </h4>
             <ul className="space-y-3">
-              {['O nas', 'Zajęcia', 'Harmonogram', 'Trenerzy', 'Cennik'].map((item) => (
-                <li key={item}>
+              {[
+                { label: 'O nas', href: '#o-nas' },
+                { label: 'Trenerzy', href: '#trenerzy' },
+                { label: 'Harmonogram', href: '#harmonogram' },
+              ].map((item) => (
+                <li key={item.label}>
                   <Link
-                    href="#"
+                    href={item.href}
                     className="text-zinc-500 hover:text-white transition-colors text-sm cursor-pointer"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}

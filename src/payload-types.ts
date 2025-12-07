@@ -157,6 +157,14 @@ export interface User {
    */
   dateOfBirth?: string | null;
   /**
+   * Zdjęcie profilowe (opcjonalne, głównie dla trenerów)
+   */
+  profileImage?: (number | null) | Media;
+  /**
+   * Pseudonim (opcjonalne, głównie dla trenerów)
+   */
+  nickname?: string | null;
+  /**
    * Rola użytkownika w systemie
    */
   role: 'member' | 'trainer' | 'admin';
@@ -185,6 +193,25 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Płatności za karnety
@@ -224,25 +251,6 @@ export interface Payment {
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * Karnety członkowskie - ważność członkostwa
@@ -426,6 +434,8 @@ export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
   phone?: T;
   dateOfBirth?: T;
+  profileImage?: T;
+  nickname?: T;
   role?: T;
   subscriptionStatus?: T;
   notes?: T;

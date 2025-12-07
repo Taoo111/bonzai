@@ -34,7 +34,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const userName = user.fullName || `${user.firstName} ${user.lastName}`
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="dark bg-black text-white min-h-screen flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800">
             <div className="flex items-center justify-between px-4 py-3 max-w-2xl mx-auto">
