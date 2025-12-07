@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
+import { useScrollAnimation } from '@/hooks/use-scroll-animation'
 
 interface Trainer {
   id: number | string
@@ -21,15 +24,29 @@ interface TrainersSectionProps {
 }
 
 export function TrainersSection({ trainers }: TrainersSectionProps) {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
+
   if (!trainers || trainers.length === 0) {
     return null
   }
 
   return (
-    <section id="trenerzy" className="py-24 sm:py-32 bg-zinc-950">
+    <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      id="trenerzy"
+      className="py-24 sm:py-32 bg-zinc-950"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div
+          ref={headerRef as React.RefObject<HTMLElement>}
+          className={`text-center mb-16 transition-all duration-700 ease-out ${
+            headerVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-zinc-500 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium mb-4">
             Zespół
           </p>
@@ -43,7 +60,7 @@ export function TrainersSection({ trainers }: TrainersSectionProps) {
 
         {/* Trainers Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {trainers.map((trainer) => {
+          {trainers.map((trainer, index) => {
             const fullName = `${trainer.firstName} ${trainer.lastName}`
             const displayName = trainer.nickname
               ? `${fullName} "${trainer.nickname}"`
@@ -52,7 +69,14 @@ export function TrainersSection({ trainers }: TrainersSectionProps) {
             return (
               <Card
                 key={trainer.id}
-                className="bg-zinc-900/50 border-zinc-800 overflow-hidden hover:border-zinc-700 transition-colors group"
+                className={`bg-zinc-900/50 border-zinc-800 overflow-hidden hover:border-zinc-700 transition-all duration-700 ease-out group ${
+                  sectionVisible
+                    ? `opacity-100 translate-y-0 scale-100 delay-[${index * 100}ms]`
+                    : 'opacity-0 translate-y-8 scale-95'
+                }`}
+                style={{
+                  transitionDelay: sectionVisible ? `${index * 100}ms` : '0ms',
+                }}
               >
                 <CardContent className="p-0">
                   {/* Trainer Image */}

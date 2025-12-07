@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import { Shield, Users, Trophy, Target } from 'lucide-react'
+import { useScrollAnimation } from '@/hooks/use-scroll-animation'
 
 const features = [
   {
@@ -25,11 +28,27 @@ const features = [
 ]
 
 export function AboutSection() {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation()
+  const { ref: textRef, isVisible: textVisible } = useScrollAnimation()
+
   return (
-    <section id="o-nas" className="py-24 sm:py-32 bg-black">
+    <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      id="o-nas"
+      className="py-24 sm:py-32 bg-black"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-24">
+        <div
+          ref={headerRef as React.RefObject<HTMLElement>}
+          className={`text-center mb-16 sm:mb-24 transition-all duration-700 ease-out ${
+            headerVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-zinc-500 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium mb-4">
             O nas
           </p>
@@ -41,7 +60,14 @@ export function AboutSection() {
         {/* Content Grid */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Side */}
-          <div className="relative aspect-4/5 lg:aspect-3/4 rounded-lg overflow-hidden">
+          <div
+            ref={imageRef as React.RefObject<HTMLElement>}
+            className={`relative aspect-4/5 lg:aspect-3/4 rounded-lg overflow-hidden transition-all duration-700 ease-out ${
+              imageVisible
+                ? 'opacity-100 translate-x-0'
+                : 'opacity-0 -translate-x-12'
+            }`}
+          >
             <Image
               src="/team-bonzai.png"
               alt="Bonzai MMA Training"
@@ -56,8 +82,18 @@ export function AboutSection() {
                 { value: '5+', label: 'Lat' },
                 { value: '200+', label: 'Członków' },
                 { value: '8', label: 'Trenerów' },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
+              ].map((stat, index) => (
+                <div
+                  key={stat.label}
+                  className={`text-center transition-all duration-700 ease-out ${
+                    imageVisible
+                      ? `opacity-100 translate-y-0 delay-[${(index + 1) * 100}ms]`
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{
+                    transitionDelay: imageVisible ? `${(index + 1) * 100}ms` : '0ms',
+                  }}
+                >
                   <p className="text-2xl sm:text-3xl font-black text-white">{stat.value}</p>
                   <p className="text-xs text-zinc-400 uppercase tracking-wider">{stat.label}</p>
                 </div>
@@ -66,7 +102,14 @@ export function AboutSection() {
           </div>
 
           {/* Text Side */}
-          <div className="space-y-8">
+          <div
+            ref={textRef as React.RefObject<HTMLElement>}
+            className={`space-y-8 transition-all duration-700 ease-out ${
+              textVisible
+                ? 'opacity-100 translate-x-0'
+                : 'opacity-0 translate-x-12'
+            }`}
+          >
             <div className="space-y-6">
               <p className="text-zinc-300 text-lg leading-relaxed">
                 <span className="text-white font-semibold">Bonzai MMA Club</span> to miejsce, gdzie
@@ -82,8 +125,18 @@ export function AboutSection() {
 
             {/* Features Grid */}
             <div className="grid sm:grid-cols-2 gap-6 pt-4">
-              {features.map((feature) => (
-                <div key={feature.title} className="flex gap-4">
+              {features.map((feature, index) => (
+                <div
+                  key={feature.title}
+                  className={`flex gap-4 transition-all duration-700 ease-out ${
+                    textVisible
+                      ? `opacity-100 translate-y-0 delay-[${(index + 1) * 100}ms]`
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{
+                    transitionDelay: textVisible ? `${(index + 1) * 100}ms` : '0ms',
+                  }}
+                >
                   <div className="shrink-0 w-12 h-12 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center">
                     <feature.icon className="h-5 w-5 text-white" />
                   </div>

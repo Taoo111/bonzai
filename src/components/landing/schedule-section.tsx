@@ -1,7 +1,10 @@
+'use client'
+
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Clock } from 'lucide-react'
 import { TrainingLevel, TRAINING_LEVEL_LABELS, TRAINING_LEVEL_COLORS } from '@/enums/training-level'
+import { useScrollAnimation } from '@/hooks/use-scroll-animation'
 
 const DAY_NAMES: Record<string, string> = {
   monday: 'Poniedziałek',
@@ -31,15 +34,29 @@ interface ScheduleSectionProps {
 }
 
 export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectionProps) {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
+
   if (!schedule?.days || schedule.days.length === 0) {
     return null
   }
 
   return (
-    <section id="harmonogram" className="py-24 sm:py-32 bg-zinc-950">
+    <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      id="harmonogram"
+      className="py-24 sm:py-32 bg-zinc-950"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div
+          ref={headerRef as React.RefObject<HTMLElement>}
+          className={`text-center mb-16 transition-all duration-700 ease-out ${
+            headerVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-zinc-500 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium mb-4">
             Harmonogram
           </p>
@@ -66,12 +83,19 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
 
         {/* Schedule Grid */}
         <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {schedule.days.map((day) => {
+          {schedule.days.map((day, index) => {
             const dayName = DAY_NAMES[day.name] || day.name
             return (
               <Card
                 key={day.id || day.name}
-                className="bg-zinc-900/50 border-zinc-800 overflow-hidden"
+                className={`bg-zinc-900/50 border-zinc-800 overflow-hidden transition-all duration-700 ease-out ${
+                  sectionVisible
+                    ? `opacity-100 translate-y-0 delay-[${index * 100}ms]`
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  transitionDelay: sectionVisible ? `${index * 100}ms` : '0ms',
+                }}
               >
                 {/* Day Header */}
                 <div className="bg-zinc-800/50 px-4 py-3 border-b border-zinc-700">
