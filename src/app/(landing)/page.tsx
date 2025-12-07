@@ -1,11 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { HeroSection } from '@/components/landing/hero-section'
-import { AboutSection } from '@/components/landing/about-section'
-import { TrainersSection } from '@/components/landing/trainers-section'
-import { ScheduleSection } from '@/components/landing/schedule-section'
-import { CTASection } from '@/components/landing/cta-section'
-import { Footer } from '@/components/landing/footer'
+import { LandingPageClient } from '@/components/landing/landing-page-client'
 
 export const metadata = {
   title: 'Bonzai MMA Club - Profesjonalne treningi sztuk walki',
@@ -59,13 +54,11 @@ export default async function LandingPage() {
   )
 
   return (
-    <div className="min-h-screen">
-      <HeroSection videoUrl={videoUrl} />
-      <AboutSection />
-      <TrainersSection trainers={trainers} />
-      <ScheduleSection schedule={schedule} trainingClassesMap={trainingClassesMap} />
-      <CTASection />
-      <Footer />
-    </div>
+    <LandingPageClient
+      videoUrl={videoUrl}
+      trainers={trainers}
+      schedule={schedule}
+      trainingClassesMap={trainingClassesMap}
+    />
   )
 }
