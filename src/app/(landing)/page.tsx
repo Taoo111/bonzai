@@ -2,6 +2,9 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { LandingPageClient } from '@/components/landing/landing-page-client'
 
+// Wyłącz cache - zawsze pobieraj świeże dane z bazy
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Bonzai MMA Club - Profesjonalne treningi sztuk walki',
   description: 'Dołącz do najlepszego klubu MMA w mieście',
