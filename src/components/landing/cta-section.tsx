@@ -6,14 +6,14 @@ import { ArrowRight } from 'lucide-react'
 import { useScrollAnimation } from '@/hooks/use-scroll-animation'
 
 export function CTASection() {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
-  const { ref: textRef, isVisible: textVisible } = useScrollAnimation()
-  const { ref: buttonsRef, isVisible: buttonsVisible } = useScrollAnimation()
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLElement>()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation<HTMLDivElement>()
+  const { ref: textRef, isVisible: textVisible } = useScrollAnimation<HTMLParagraphElement>()
+  const { ref: buttonsRef, isVisible: buttonsVisible } = useScrollAnimation<HTMLDivElement>()
 
   return (
     <section
-      ref={sectionRef as React.RefObject<HTMLElement>}
+      ref={sectionRef}
       className={`py-24 sm:py-32 bg-black relative overflow-hidden transition-all duration-700 ease-out ${
         sectionVisible
           ? 'opacity-100 scale-100'
@@ -32,7 +32,7 @@ export function CTASection() {
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <div
-          ref={headerRef as React.RefObject<HTMLElement>}
+          ref={headerRef}
           className={`transition-all duration-700 ease-out ${
             headerVisible
               ? 'opacity-100 translate-y-0 delay-100'
@@ -49,7 +49,7 @@ export function CTASection() {
           </h2>
         </div>
         <p
-          ref={textRef as React.RefObject<HTMLElement>}
+          ref={textRef}
           className={`text-zinc-400 text-lg max-w-2xl mx-auto mb-10 transition-all duration-700 ease-out ${
             textVisible
               ? 'opacity-100 translate-y-0 delay-200'
@@ -61,7 +61,7 @@ export function CTASection() {
           Ciebie.
         </p>
         <div
-          ref={buttonsRef as React.RefObject<HTMLElement>}
+          ref={buttonsRef}
           className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 ease-out ${
             buttonsVisible
               ? 'opacity-100 translate-y-0 delay-300'

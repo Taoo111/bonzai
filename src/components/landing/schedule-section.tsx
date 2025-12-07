@@ -34,8 +34,8 @@ interface ScheduleSectionProps {
 }
 
 export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectionProps) {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLElement>()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation<HTMLDivElement>()
 
   if (!schedule?.days || schedule.days.length === 0) {
     return null
@@ -43,14 +43,14 @@ export function ScheduleSection({ schedule, trainingClassesMap }: ScheduleSectio
 
   return (
     <section
-      ref={sectionRef as React.RefObject<HTMLElement>}
+      ref={sectionRef}
       id="harmonogram"
       className="py-24 sm:py-32 bg-zinc-950"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div
-          ref={headerRef as React.RefObject<HTMLElement>}
+          ref={headerRef}
           className={`text-center mb-16 transition-all duration-700 ease-out ${
             headerVisible
               ? 'opacity-100 translate-y-0'

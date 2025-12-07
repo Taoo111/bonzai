@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, RefObject } from 'react'
 
 interface UseScrollAnimationOptions {
   threshold?: number
@@ -6,7 +6,9 @@ interface UseScrollAnimationOptions {
   triggerOnce?: boolean
 }
 
-export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
+export function useScrollAnimation<T extends HTMLElement = HTMLElement>(
+  options: UseScrollAnimationOptions = {}
+) {
   const {
     threshold = 0.1,
     rootMargin = '0px',
@@ -14,7 +16,7 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
   } = options
 
   const [isVisible, setIsVisible] = useState(false)
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<T>(null)
 
   useEffect(() => {
     const element = elementRef.current
@@ -44,6 +46,6 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
     }
   }, [threshold, rootMargin, triggerOnce])
 
-  return { ref: elementRef, isVisible }
+  return { ref: elementRef as RefObject<T>, isVisible }
 }
 

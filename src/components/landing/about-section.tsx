@@ -28,21 +28,21 @@ const features = [
 ]
 
 export function AboutSection() {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation()
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation()
-  const { ref: textRef, isVisible: textVisible } = useScrollAnimation()
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLElement>()
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation<HTMLDivElement>()
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>()
+  const { ref: textRef, isVisible: textVisible } = useScrollAnimation<HTMLDivElement>()
 
   return (
     <section
-      ref={sectionRef as React.RefObject<HTMLElement>}
+      ref={sectionRef}
       id="o-nas"
       className="py-24 sm:py-32 bg-black"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div
-          ref={headerRef as React.RefObject<HTMLElement>}
+          ref={headerRef}
           className={`text-center mb-16 sm:mb-24 transition-all duration-700 ease-out ${
             headerVisible
               ? 'opacity-100 translate-y-0'
@@ -61,7 +61,7 @@ export function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Side */}
           <div
-            ref={imageRef as React.RefObject<HTMLElement>}
+            ref={imageRef}
             className={`relative aspect-4/5 lg:aspect-3/4 rounded-lg overflow-hidden transition-all duration-700 ease-out ${
               imageVisible
                 ? 'opacity-100 translate-x-0'
@@ -103,7 +103,7 @@ export function AboutSection() {
 
           {/* Text Side */}
           <div
-            ref={textRef as React.RefObject<HTMLElement>}
+            ref={textRef}
             className={`space-y-8 transition-all duration-700 ease-out ${
               textVisible
                 ? 'opacity-100 translate-x-0'
