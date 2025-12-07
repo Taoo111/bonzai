@@ -22,19 +22,8 @@ export default async function LandingPage() {
     depth: 2, // Pobierz relacje (trainingClass, trainer)
   })
 
-  // Pobierz wideo tła z Media collection
-  const { docs: backgroundVideos } = await payload.find({
-    collection: 'media',
-    where: {
-      filename: {
-        equals: 'background.mp4',
-      },
-    },
-    limit: 1,
-  })
-
-  const backgroundVideo = backgroundVideos[0] || null
-  const videoUrl = backgroundVideo?.url || null
+  // Użyj filmiku z folderu public
+  const videoUrl = '/background.mp4'
 
   // Pobierz trenerów (użytkowników z rolą trainer)
   const { docs: trainers } = await payload.find({

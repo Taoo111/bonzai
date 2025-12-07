@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { SubscriptionStatus } from '../enums/subscription-status'
 import { UserRole } from '../enums/user-role'
 import { populateFullName } from '@/hooks/users/fields/populateFullName'
+import { enforceMemberRole } from '@/hooks/users/enforceMemberRole'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -17,6 +18,10 @@ export const Users: CollectionConfig = {
   auth: true,
   access: {
     read: () => true,
+    create: () => true, // Pozwól na publiczną rejestrację
+  },
+  hooks: {
+    beforeChange: [enforceMemberRole],
   },
   fields: [
     {
